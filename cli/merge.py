@@ -5,3 +5,4 @@ def merge(inp: list, out: str):
         merger.append(str(files))
     merger.write(out)
     merger.close()
+    print(f'PDF generated and saved as {out} successfully')

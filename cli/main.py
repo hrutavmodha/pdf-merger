@@ -1,11 +1,13 @@
 from sys import argv
 from numpy import array, where
-from merge import merge as merge
+from merge import merge
+import os
+from sys import platform as pf
 arg = array(argv)
 inp = []
 out = []
-if argv[1] != '-i' or '-o' not in argv:
-    raise IOError('Input and Output sources must be provided')
+if len(arg) < 3:
+    print('Input and Output sources must be provided')
 else:
     i = arg == '-i'
     o = arg == '-o'
@@ -15,3 +17,7 @@ else:
 for files in inp:
     if not files.endswith('.pdf'):
         raise FileNotFoundError('Only files with .pdf extension can be passed as arguements')
+if '--open' in arg:
+    print('Opening the generated PDF')
+    pdf = arg[where(arg == '-o')[0][0] + 1]
+    os.system(f'start "" {pdf}' if pf == 'win32' else f'xdg-open {pdf}' if pf == 'linux' else f'open {pdf}' if pf == 'darwin' else 'Unsupported OS')
